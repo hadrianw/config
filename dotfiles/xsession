@@ -1,0 +1,6 @@
+#!/bin/sh
+while xsetroot -name "`~/priv/stater/stater` `echo -e "\x02"``date +'%a %F %R'`"
+do
+        sleep 11
+done &
+exec dbus-launch /usr/local/bin/dwm &> ~/.xsession-errors
