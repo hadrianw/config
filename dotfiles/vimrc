@@ -1,0 +1,21 @@
+" Various
+language en_US.UTF-8
+set incsearch
+set showmatch
+set mouse-=a
+set nobackup
+"set listchars+=nbsp:¬
+
+" Highlight current line and column
+set cursorline
+au WinLeave * set nocursorline
+au WinEnter * set cursorline
+
+" Line numbers and cursor position
+set ruler
+set numberwidth=1
+set number
+hi LineNr cterm=inverse
+
+" Indentation
+set autoindent
