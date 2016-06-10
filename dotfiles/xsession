@@ -1,5 +1,5 @@
 #!/bin/sh
-while xsetroot -name "`~/priv/stater/stater` `echo -e "\x02"``date +'%a %F %R'`"
+while xsetroot -name "$(~/dev/stater/stater) $(date +'%a %F %R')"
 do
         sleep 11
 done &

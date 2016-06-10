@@ -1,11 +1,11 @@
-URxvt.saveLines: 65535
+URxvt.saveLines: 16384
 URxvt.loginShell: true
 URxvt.visualBell: true
 URxvt.cursorColor: red
 
 URxvt.scrollBar: false
 
-URxvt.font: xft:Droid Sans Mono:size=10:antialias=true
+URxvt.font: xft:Monospace:size=10:antialias=true
 
 URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
 URxvt.perl-ext: selection,mark-yank-urls
