@@ -21,7 +21,7 @@ ubuntu:
 	sudo apt-get install \
 		rxvt-unicode \
 		vim vim-gtk \
-		htop \
+		htop silversearcher-ag \
 		thunar \
 		build-essential git git-gui \
 		libx11-dev libxinerama-dev libxft-dev \
