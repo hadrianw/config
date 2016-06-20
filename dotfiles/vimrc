@@ -6,7 +6,7 @@ set mouse-=a
 set nobackup
 "set listchars+=nbsp:¬
 
-" Highlight current line and column
+" Highlight current line
 set cursorline
 au WinLeave * set nocursorline
 au WinEnter * set cursorline
