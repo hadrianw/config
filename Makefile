@@ -6,7 +6,7 @@ dotfiles:
 
 dwm:
 	(cd dwm && git pull origin master) || git clone http://git.suckless.org/dwm
-	if [ dwm.config.h -nt dwm/config.h ]; then cp dwm.config.h dwm/config.h; fi
+	cp -u dwm.config.h dwm/config.h
 	cd dwm && make && sudo make install
 
 /usr/share/xsessions/xsession.desktop: /etc/X11/Xsession xsession.desktop
