@@ -1,4 +1,4 @@
-all: dwm dotfiles /usr/share/xsessions/xsession.desktop
+all: dwm dmenu dotfiles /usr/share/xsessions/xsession.desktop
 
 dotfiles:
 	cd dotfiles && for i in *; do cp -rv "$$i" "$(HOME)/.$$i"; done
@@ -10,6 +10,11 @@ GIT_PROTOCOL=git
 dwm:
 	(cd $@ && git pull origin master) || git clone $(GIT_PROTOCOL)://git.suckless.org/$@
 	if [ ! -e dwm/config.h -o dwm.config.h -nt dwm/config.h ]; then cp dwm.config.h dwm/config.h; fi
+	cd $@ && make && sudo make install
+
+dmenu:
+	(cd $@ && git pull origin master) || git clone $(GIT_PROTOCOL)://git.suckless.org/$@
+	rm -f dmenu/config.h
 	cd $@ && make && sudo make install
 
 /usr/share/xsessions/xsession.desktop: /etc/X11/Xsession xsession.desktop
@@ -31,4 +36,4 @@ ubuntu:
 		suckless-tools \
 		sharutils
 
-.PHONY: all dwm dotfiles bashrc ubuntu
+.PHONY: all dwm dmenu dotfiles bashrc ubuntu
