@@ -1,4 +1,5 @@
 #!/bin/sh
+cd ~
 while xsetroot -name "$(~/dev/stater/stater) $(date +'%a %F %R')"
 do
         sleep 11
