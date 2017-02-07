@@ -36,4 +36,13 @@ ubuntu:
 		suckless-tools \
 		sharutils
 
-.PHONY: all dwm dmenu dotfiles bashrc ubuntu
+centos: dmenu
+	sudo yum install \
+		rxvt-unicode \
+		gvim \
+		htop the_silver_searcher \
+		google-droid-sans-fonts google-droid-sans-mono-fonts \
+		xclip \
+		gperftools kdesdk createrepo
+
+.PHONY: all dwm dmenu dotfiles bashrc ubuntu centos
