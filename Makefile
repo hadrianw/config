@@ -4,10 +4,13 @@ dotfiles:
 	cd dotfiles && for i in *; do cp -rv "$$i" "$(HOME)/.$$i"; done
 	xrdb -merge $(HOME)/.Xdefaults
 
+GIT_PROTOCOL=git
+#GIT_PROTOCOL=https
+
 dwm:
-	(cd dwm && git pull origin master) || git clone http://git.suckless.org/dwm
-	cp -u dwm.config.h dwm/config.h
-	cd dwm && make && sudo make install
+	(cd $@ && git pull origin master) || git clone $(GIT_PROTOCOL)://git.suckless.org/$@
+	if [ ! -e dwm/config.h -o dwm.config.h -nt dwm/config.h ]; then cp dwm.config.h dwm/config.h; fi
+	cd $@ && make && sudo make install
 
 /usr/share/xsessions/xsession.desktop: /etc/X11/Xsession xsession.desktop
 	sed -i s%^Exec=.*%Exec=$<% xsession.desktop
