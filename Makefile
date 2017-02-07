@@ -1,4 +1,4 @@
-all: dwm dmenu dotfiles /usr/share/xsessions/xsession.desktop
+all: dwm dmenu dotfiles xsession
 
 dotfiles:
 	cd dotfiles && for i in *; do cp -rv "$$i" "$(HOME)/.$$i"; done
@@ -17,9 +17,10 @@ dmenu:
 	rm -f dmenu/config.h
 	cd $@ && make && sudo make install
 
-/usr/share/xsessions/xsession.desktop: /etc/X11/Xsession xsession.desktop
-	sed -i s%^Exec=.*%Exec=$<% xsession.desktop
-	sudo cp xsession.desktop /usr/share/xsessions/
+xsession: /usr/share/xsessions/xsession.desktop
+VPATH=.:/etc/X11/xinit:/etc/X11
+/usr/share/xsessions/xsession.desktop: Xsession xsession.desktop
+	sed s%^Exec=.*%Exec=$<% xsession.desktop | sudo tee $@ > /dev/null
 
 bashrc:
 	sed -i 's%^source ".*/bashrc_append$$"%%' "$(HOME)/.bashrc"
@@ -45,4 +46,4 @@ centos: dmenu
 		xclip \
 		gperftools kdesdk createrepo
 
-.PHONY: all dwm dmenu dotfiles bashrc ubuntu centos
+.PHONY: all dwm dmenu dotfiles xsession bashrc ubuntu centos
