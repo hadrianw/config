@@ -18,6 +18,8 @@ set ruler
 set numberwidth=1
 set number
 hi LineNr cterm=inverse
+hi CursorLine cterm=NONE
+hi CursorLine ctermbg=LightBlue
 
 " Indentation
 set autoindent
