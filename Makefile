@@ -1,8 +1,12 @@
-all: dwm dmenu dotfiles xsession
+all: dotfiles
 
-dotfiles:
+dotfiles: bashrc
 	cd dotfiles && for i in *; do cp -rv "$$i" "$(HOME)/.$$i"; done
 	xrdb -merge $(HOME)/.Xdefaults
+
+bashrc:
+	sed -i 's%^source ".*/bashrc_append$$"%%' "$(HOME)/.bashrc"
+	echo source $$(readlink -f bashrc_append) >> "$(HOME)/.bashrc"
 
 GIT_PROTOCOL=git
 #GIT_PROTOCOL=https
@@ -22,11 +26,7 @@ VPATH=.:/etc/X11/xinit:/etc/X11
 /usr/share/xsessions/xsession.desktop: Xsession xsession.desktop
 	sed s%^Exec=.*%Exec=$<% xsession.desktop | sudo tee $@ > /dev/null
 
-bashrc:
-	sed -i 's%^source ".*/bashrc_append$$"%%' "$(HOME)/.bashrc"
-	echo source $$(readlink -f bashrc_append) >> "$(HOME)/.bashrc"
-
-ubuntu:
+ubuntu: dwm xsession
 	sudo apt-get install \
 		rxvt-unicode \
 		vim vim-gtk \
@@ -37,7 +37,7 @@ ubuntu:
 		suckless-tools \
 		sharutils
 
-centos: dmenu
+centos: dwm dmenu xsession
 	sudo yum install \
 		rxvt-unicode \
 		gvim \
@@ -46,4 +46,4 @@ centos: dmenu
 		xclip \
 		gperftools kdesdk createrepo
 
-.PHONY: all dwm dmenu dotfiles xsession bashrc ubuntu centos
+.PHONY: all dotfiles bashrc dwm dmenu xsession ubuntu centos
