@@ -1,12 +1,12 @@
 all: dotfiles
 
 dotfiles: bashrc
-	cd dotfiles && for i in *; do cp -rv "$$i" "$(HOME)/.$$i"; done
+	cd dotfiles && for i in *; do cp -rv "$$i" "$$HOME/.$$i"; done
 	xrdb -merge $(HOME)/.Xdefaults
 
 bashrc:
-	sed -i 's%^source ".*/bashrc_append$$"%%' "$(HOME)/.bashrc"
-	echo source $$(readlink -f bashrc_append) >> "$(HOME)/.bashrc"
+	sed -i "s%^source .*/bashrc_append\"$$%%" "$$HOME/.bashrc"
+	echo "source \"$$(readlink -f bashrc_append)\"" >> "$$HOME/.bashrc"
 
 GIT_PROTOCOL=git
 #GIT_PROTOCOL=https
