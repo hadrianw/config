@@ -26,7 +26,7 @@ VPATH=.:/etc/X11/xinit:/etc/X11
 /usr/share/xsessions/xsession.desktop: Xsession xsession.desktop
 	sed s%^Exec=.*%Exec=$<% xsession.desktop | sudo tee $@ > /dev/null
 
-ubuntu: dwm xsession
+ubuntu-install:
 	sudo apt-get install \
 		rxvt-unicode \
 		vim vim-gtk \
@@ -36,8 +36,14 @@ ubuntu: dwm xsession
 		libx11-dev libxinerama-dev libxft-dev \
 		suckless-tools \
 		sharutils
+ubuntu: ubuntu-install dwm xsession
+ubuntu-vm: ubuntu
+	sudo apt-get install \
+		openssh-server
+	sudo systemctl ssh start
+	sudo systemctl enable ssh.service
 
-centos: dwm dmenu xsession
+centos-install:
 	sudo yum install \
 		rxvt-unicode \
 		gvim \
@@ -45,5 +51,6 @@ centos: dwm dmenu xsession
 		google-droid-sans-fonts google-droid-sans-mono-fonts \
 		xclip \
 		gperftools kdesdk createrepo
+centos: centos-install dwm dmenu xsession
 
 .PHONY: all dotfiles bashrc dwm dmenu xsession ubuntu centos
