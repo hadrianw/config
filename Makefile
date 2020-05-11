@@ -26,6 +26,15 @@ VPATH=.:/etc/X11/xinit:/etc/X11
 /usr/share/xsessions/xsession.desktop: Xsession xsession.desktop
 	sed s%^Exec=.*%Exec=$<% xsession.desktop | sudo tee $@ > /dev/null
 
+void-install:
+	sudo xbps-install \
+		rxvt-unicode \
+		gvim \
+		htop the_silver_searcher \
+		base-devel git git-gui \
+		libX11-devel libXinerama-devel libXft-devel \
+		jq
+
 ubuntu-install:
 	sudo apt-get install \
 		rxvt-unicode \
