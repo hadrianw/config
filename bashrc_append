@@ -3,5 +3,6 @@ export HISTSIZE=65535
 export HISTIGNORE="ls:bg:fg:jobs"
 shopt -s histappend
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+eval $(ssh-agent)
 
 export EDITOR="vim"
