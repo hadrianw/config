@@ -17,6 +17,12 @@ export HISTSIZE=65535
 export HISTIGNORE="ls:bg:fg:jobs"
 shopt -s histappend
 PROMPT_COMMAND="reset_title;history -a;$PROMPT_COMMAND"
+
+cleanup()
+{
+	eval $(ssh-agent -k)
+}
+trap cleanup EXIT
 eval $(ssh-agent)
 
 export EDITOR="vim"
