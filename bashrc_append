@@ -1,7 +1,7 @@
-set_title() {
+my_set_title() {
 	echo -ne "\e]0;$1\007"
 }
-reset_title() {
+my_reset_title() {
 	local cwd_name=""
 	if [[ "$PWD" = "$HOME" ]]; then
 		cwd_name="~"
@@ -9,35 +9,43 @@ reset_title() {
 		local parent_name="$(dirname "$PWD")"
 		cwd_name="$(basename "$PWD") ${parent_name/#$HOME/\~}"
 	fi
-	set_title "$cwd_name $USER@$HOSTNAME"
+	my_set_title "$cwd_name $USER@$HOSTNAME"
 }
 
-export PS1="\[$(tput bold)\]\u\[$(tput sgr0)\]@\h:\[$(tput bold)\]\w\[$(tput sgr0)\]\n\\$ \[$(tput sgr0)\]"
-export HISTSIZE=65535
-export HISTIGNORE="ls:bg:fg:jobs"
-shopt -s histappend
-PROMPT_COMMAND="reset_title;history -a;$PROMPT_COMMAND"
-
-cleanup()
+my_cleanup()
 {
 	eval $(ssh-agent -k)
 }
-trap cleanup EXIT
-eval $(ssh-agent)
 
-export EDITOR="vim"
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-export LC_COLLATE=pl_PL.UTF-8
-export LC_ADDRESS=pl_PL.UTF-8
-export LC_COLLATE=pl_PL.UTF-8
-export LC_CTYPE=pl_PL.UTF-8
-export LC_MONETARY=pl_PL.UTF-8
-export LC_MEASUREMENT=pl_PL.UTF-8
-export LC_MESSAGES=pl_PL.UTF-8
-export LC_NUMERIC=en_US.UTF-8
-export LC_PAPER=pl_PL.UTF-8
-export LC_RESPONSE=pl_PL.UTF-8
-export LC_TELEPHONE=pl_PL.UTF-8
-export LC_TIME=pl_PL.UTF-8
-export LC_ALL=
+my_setup()
+{
+	export PS1="\[$(tput bold)\]\u\[$(tput sgr0)\]@\h:\[$(tput bold)\]\w\[$(tput sgr0)\]\n\\$ \[$(tput sgr0)\]"
+	export HISTSIZE=65535
+	export HISTIGNORE="ls:bg:fg:jobs"
+	if [ "$SHELL" = "/bin/bash" ]; then
+		shopt -s histappend
+	fi
+	PROMPT_COMMAND="my_reset_title;history -a;$PROMPT_COMMAND"
+
+	trap my_cleanup EXIT
+	eval $(ssh-agent)
+
+	export EDITOR="vim"
+	export LANG=en_US.UTF-8
+	export LANGUAGE=en_US.UTF-8
+	export LC_COLLATE=pl_PL.UTF-8
+	export LC_ADDRESS=pl_PL.UTF-8
+	export LC_COLLATE=pl_PL.UTF-8
+	export LC_CTYPE=pl_PL.UTF-8
+	export LC_MONETARY=pl_PL.UTF-8
+	export LC_MEASUREMENT=pl_PL.UTF-8
+	export LC_MESSAGES=pl_PL.UTF-8
+	export LC_NUMERIC=en_US.UTF-8
+	export LC_PAPER=pl_PL.UTF-8
+	export LC_RESPONSE=pl_PL.UTF-8
+	export LC_TELEPHONE=pl_PL.UTF-8
+	export LC_TIME=pl_PL.UTF-8
+	export LC_ALL=
+}
+
+[[ $- = *i* ]] && my_setup
